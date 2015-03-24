@@ -1,0 +1,96 @@
+<div class="row col col-md-12">
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="ほぞんしたビーズをみる" is-open="status.isFirstOpen"
+                     is-disabled="status.isFirstDisabled">
+      <div class="col col-md-12" style="height:120px;">
+        <div ng-include src="'./views/handleSavedRecDialog.html'"></div>
+        <div ng-repeat="saveRec in savedRecs" ng-click="handleSavedRec(saveRec.name)"
+             style="display: inline-block; width:140px;">
+          <label>{{saveRec.name}}</label>
+
+          <div ng-repeat="savedBeads in saveRec.data">
+            <div ng-repeat="savedBead in savedBeads">
+              <div class="s_circle s_{{savedBead.color}}"
+                   style="position: absolute; top:{{savedBead.top}}px; left:{{savedBead.left}}px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </accordion-group>
+  </accordion>
+</div>
+<div class="row col col-md-12">
+  <div class="panel panel-info">
+    <div class="panel panel-heading">
+      いろをえらんでください
+    </div>
+    <div class="panel panel-body">
+      <table class="table" style="width: 160px">
+        <tr>
+          <td class="circle shiro" style="width: 20px;" ng-click="select('shiro')"></td>
+          <td class="circle aka" style="width: 20px;" ng-click="select('aka')"></td>
+          <td class="circle ao" style="width: 20px;" ng-click="select('ao')"></td>
+          <td class="circle kiiro" style="width: 20px;" ng-click="select('kiiro')"></td>
+          <td class="circle midori" style="width: 20px;" ng-click="select('midori')"></td>
+          <td class="circle cha" style="width: 20px;" ng-click="select('cha')"></td>
+          <td class="circle kuro" style="width: 20px;" ng-click="select('kuro')"></td>
+          <td class="circle deselect" style="width: 20px;" ng-click="select('deselect')"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--
+      <div style="height: 50px; width: 200px; position: relative;">
+        <div class="circle shiro" ng-click="select('shiro')" style="position: absolute; top: 0px; left:0px;"></div>
+        <div class="circle aka" ng-click="select('aka')" style="position: absolute; top: 0px; left:21px;"></div>
+        <div class="circle ao" ng-click="select('ao')" style="position: absolute; top: 0px; left:42px;"></div>
+        <div class="circle kiiro" ng-click="select('kiiro')" style="position: absolute; top: 0px; left:63px;"></div>
+        <div class="circle midori" ng-click="select('midori')" style="position: absolute; top: 21px; left:0px;"></div>
+        <div class="circle cha" ng-click="select('cha')" style="position: absolute; top: 21px; left:21px;"></div>
+        <div class="circle kuro" ng-click="select('kuro')" style="position: absolute; top: 21px; left:42px;"></div>
+        <div class="circle deselect" ng-click="select('deselect')"
+             style="position: absolute; top: 21px; left:63px;"></div>
+      </div>
+    </div>
+  -->
+  <br/>
+
+  <div class="row">
+    <div class="col col-md-6" ng-dblclick="open('sm')">
+      <div ng-repeat="beads in beadsList">
+        <div ng-repeat="bead in beads">
+          <div class="circle {{bead.color}}" ng-click="changeColor(bead)"
+               style="position: absolute; top:{{bead.top}}px; left:{{bead.left}}px;">
+          </div>
+        </div>
+        <div ng-include src="'./views/contextMenu.html'"></div>
+      </div>
+    </div>
+    <div class="col col-md-6" style="left: 130px;">
+        <label>いまのいろ</label>
+      <div class="circle {{color}}"></div>
+      <br/>
+      <!--
+            <input type="button" class="btn btn-primary" value="いろをかえる" ng-click="open('sm')"/>
+            <br/>
+            <br/>
+      -->
+        <label>ビーズのかず</label>
+        <ul>
+          <div ng-repeat="(key, value)  in colors">
+            <li>
+              <div class="circle {{key}}" style="display: inline-block"></div>
+              <div style="display: inline-block">{{value}}</div>
+            </li>
+          </div>
+        </ul>
+        <br/>
+      <input type="button" class="btn btn-info" value="ほぞんする" ng-click="save()"/>
+
+      <div ng-include src="'./views/saveDialog.html'"></div>
+    </div>
+  </div>
+</div>
+</div>
+

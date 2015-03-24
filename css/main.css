@@ -1,0 +1,11 @@
+.circle {
+    width: 20px;
+    height: 20px;
+}
+
+.deselect {
+    background-image: url("../images/deselect.png")
+}
+.aka {
+    background-image: url("../images/red.png")
+}
