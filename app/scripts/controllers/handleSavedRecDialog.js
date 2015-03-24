@@ -1,16 +1,16 @@
 angular.module('perlerbeadsApp')
-  .controller('HandleSavedRecDialogCtrl', ['$scope', '$modalInstance', 'beadsDataService', 'name', 'currentData',
-    function ($scope, $modalInstance, beadsDataService, name, currentData) {
+  .controller('HandleSavedRecDialogCtrl', ['$scope', '$modalInstance', 'beadDataService', 'name', 'currentData',
+    function ($scope, $modalInstance, beadDataService, name, currentData) {
 
       $scope.name = name;
       $scope.edit = function () {
-        currentData = beadsDataService.getDataByName(name);
-        beadsDataService.currentSave(currentData.data);
+        currentData = beadDataService.getDataByName(name);
+        beadDataService.currentSave(currentData.data);
         $modalInstance.close();
       };
 
       $scope.deleteData = function () {
-        beadsDataService.deleteData(name);
+        beadDataService.deleteData(name);
         $modalInstance.close();
       };
 

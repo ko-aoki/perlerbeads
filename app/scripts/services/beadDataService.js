@@ -1,4 +1,4 @@
-angular.module('perlerbeadsApp').service('beadsDataService', ['$resource', '$window',
+angular.module('perlerbeadsApp').service('beadDataService', ['$resource', '$window',
   function ($resource, $window) {
     this.currentSave = function (currentData) {
       $window.localStorage.setItem('CURRENT_DATA', angular.toJson(currentData));
@@ -42,7 +42,7 @@ angular.module('perlerbeadsApp').service('beadsDataService', ['$resource', '$win
       return angular.fromJson($window.localStorage.getItem('PERSISTED_DATA'));
     };
 
-    this.delete= function (name) {
+    this.deleteData = function (name) {
       var records = [];
       if ($window.localStorage.getItem('PERSISTED_DATA') != null) {
         records = angular.fromJson($window.localStorage.getItem('PERSISTED_DATA'));

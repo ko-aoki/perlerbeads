@@ -1,4 +1,4 @@
-angular.module('perlerbeadsApp').service('beadsViewService',
+angular.module('perlerbeadsApp').service('beadViewService',
   function () {
     this.setPaletteType = function (palette) {
       this.palette =  palette;
@@ -14,8 +14,8 @@ angular.module('perlerbeadsApp').service('beadsViewService',
 
     this.countColors = function(beadsList) {
       var colors = {};
-      for(topIdx = 0; topIdx < 14; topIdx++) {
-        for (leftIdx = 0; leftIdx < 14; leftIdx++) {
+      for(topIdx = 0; topIdx < beadsList.length; topIdx++) {
+        for (leftIdx = 0; leftIdx < beadsList[topIdx].length; leftIdx++) {
           var color = beadsList[topIdx][leftIdx].color;
           if ( color == 'deselect') {
             continue;

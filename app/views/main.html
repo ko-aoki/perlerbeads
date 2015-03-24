@@ -40,20 +40,7 @@
       </table>
     </div>
   </div>
-  <!--
-      <div style="height: 50px; width: 200px; position: relative;">
-        <div class="circle shiro" ng-click="select('shiro')" style="position: absolute; top: 0px; left:0px;"></div>
-        <div class="circle aka" ng-click="select('aka')" style="position: absolute; top: 0px; left:21px;"></div>
-        <div class="circle ao" ng-click="select('ao')" style="position: absolute; top: 0px; left:42px;"></div>
-        <div class="circle kiiro" ng-click="select('kiiro')" style="position: absolute; top: 0px; left:63px;"></div>
-        <div class="circle midori" ng-click="select('midori')" style="position: absolute; top: 21px; left:0px;"></div>
-        <div class="circle cha" ng-click="select('cha')" style="position: absolute; top: 21px; left:21px;"></div>
-        <div class="circle kuro" ng-click="select('kuro')" style="position: absolute; top: 21px; left:42px;"></div>
-        <div class="circle deselect" ng-click="select('deselect')"
-             style="position: absolute; top: 21px; left:63px;"></div>
-      </div>
-    </div>
-  -->
+
   <br/>
 
   <div class="row">
@@ -68,7 +55,10 @@
       </div>
     </div>
     <div class="col col-md-6" style="left: 130px;">
-        <label>いまのいろ</label>
+      <h4>{{name}}</h4>
+      <br/>
+      <label>いまのいろ</label>
+
       <div class="circle {{color}}"></div>
       <br/>
       <!--
@@ -76,17 +66,18 @@
             <br/>
             <br/>
       -->
-        <label>ビーズのかず</label>
-        <ul>
-          <div ng-repeat="(key, value)  in colors">
-            <li>
-              <div class="circle {{key}}" style="display: inline-block"></div>
-              <div style="display: inline-block">{{value}}</div>
-            </li>
-          </div>
-        </ul>
-        <br/>
+      <label>ビーズのかず</label>
+      <ul>
+        <div ng-repeat="(key, value)  in colors">
+          <li>
+            <div class="circle {{key}}" style="display: inline-block"></div>
+            <div style="display: inline-block">{{value}}</div>
+          </li>
+        </div>
+      </ul>
+      <br/>
       <input type="button" class="btn btn-info" value="ほぞんする" ng-click="save()"/>
+      <input type="button" class="btn btn-info" value="あたらしくつくる" ng-click="makeNewData()"/>
 
       <div ng-include src="'./views/saveDialog.html'"></div>
     </div>

@@ -7,24 +7,24 @@
  */
 angular.module('perlerbeadsApp')
   .controller('MainCtrl',
-  ['$scope', '$modal', 'beadsDataService', 'beadsViewService', 'squarePalette',
-    function ($scope, $modal, beadsDataService, beadsViewService, squarePalette) {
+  ['$scope', '$modal', '$window', 'beadDataService', 'beadViewService', 'squarePalette',
+    function ($scope, $modal, $window, beadDataService, beadViewService, squarePalette) {
 
-      var savedRecs = beadsDataService.load();
-      beadsViewService.setPaletteType(squarePalette);
+      var savedRecs = beadDataService.load();
+      beadViewService.setPaletteType(squarePalette);
       if (savedRecs != null) {
         for (var i = 0; i < savedRecs.length; i++) {
-          savedRecs[i].data = beadsViewService.convert(savedRecs[i].data, true, i);
+          savedRecs[i].data = beadViewService.convert(savedRecs[i].data, true, i);
         }
       }
       $scope.savedRecs = savedRecs;
 
       function displayCurrent(){
-        if (beadsDataService.currentGet() == null) {
-          $scope.beadsList = beadsViewService.makePalette();
+        if (beadDataService.currentGet() == null) {
+          $scope.beadsList = beadViewService.makePalette();
         } else {
-          $scope.beadsList = beadsViewService.convert(beadsDataService.currentGet());
-          $scope.colors = beadsViewService.countColors($scope.beadsList);
+          $scope.beadsList = beadViewService.convert(beadDataService.currentGet());
+          $scope.colors = beadViewService.countColors($scope.beadsList);
         }
       };
       displayCurrent();
@@ -41,8 +41,8 @@ angular.module('perlerbeadsApp')
         } else {
           bead.color = $scope.color;
         }
-        beadsDataService.currentSave($scope.beadsList);
-        $scope.colors = beadsViewService.countColors($scope.beadsList);
+        beadDataService.currentSave($scope.beadsList);
+        $scope.colors = beadViewService.countColors($scope.beadsList);
       };
 
       $scope.handleSavedRec = function (name) {
@@ -60,35 +60,36 @@ angular.module('perlerbeadsApp')
           }
         });
 
-        modalInstance.result.then(function () {
+        modalInstance.result.then(function (){
+          $scope.name = name;
           displayCurrent();
         });
       };
-
-/*
-      $scope.open = function () {
-        var modalInstance = $modal.open({
-          size: 'sm',
-          templateUrl: 'contextMenu.tmpl.html',
-          controller: 'ContextMenuCtrl'
-        });
-
-        modalInstance.result.then(function (color) {
-          $scope.color = color;
-        });
-      };
-*/
 
       $scope.save = function () {
         var modalInstance = $modal.open({
           size: 'sm',
           templateUrl: 'saveDialog.tmpl.html',
-          controller: 'SaveDialogCtrl'
+          controller: 'SaveDialogCtrl',
+          resolve: {
+            name: function () {
+              return $scope.name;
+            }
+          }
         });
 
         modalInstance.result.then(function (fileName) {
-          beadsDataService.save(fileName, $scope.beadsList);
+          beadDataService.save(fileName, $scope.beadsList);
         });
+      };
+
+      $scope.makeNewData = function () {
+        if ($window.confirm( 'いまのずあんをほぞんしますか？')) {
+          $scope.save();
+        }
+        $scope.name = '';
+        $scope.beadsList = beadViewService.makePalette();
+        $scope.colors = beadViewService.countColors($scope.beadsList);
       };
 
     }]);
