@@ -1,7 +1,7 @@
-angular.module('perlerbeadsApp').service('beadViewService',
-  function () {
-    this.setPaletteType = function (palette) {
-      this.palette =  palette;
+angular.module('perlerbeadsApp').service('beadViewService',['beadService', 'squarePalette',
+  function (beadService, squarePalette) {
+    this.setPaletteType = function (paletteType) {
+      this.palette = beadService.getPalette(paletteType);
     };
 
     this.makePalette = function () {
@@ -30,4 +30,4 @@ angular.module('perlerbeadsApp').service('beadViewService',
       return colors;
     }
 
-  });
+  }]);

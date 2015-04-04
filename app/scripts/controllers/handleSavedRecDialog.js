@@ -1,11 +1,12 @@
 angular.module('perlerbeadsApp')
-  .controller('HandleSavedRecDialogCtrl', ['$scope', '$modalInstance', 'beadDataService', 'name', 'currentData',
-    function ($scope, $modalInstance, beadDataService, name, currentData) {
+  .controller('HandleSavedRecDialogCtrl', ['$scope', '$modalInstance', 'beadDataService', 'beadViewService', 'name', 'currentData',
+    function ($scope, $modalInstance, beadDataService,  beadViewService, name, currentData) {
 
       $scope.name = name;
       $scope.edit = function () {
         currentData = beadDataService.getDataByName(name);
-        beadDataService.currentSave(currentData.data);
+        beadViewService.setPaletteType(currentData.paletteType);
+        beadDataService.currentSave(name, currentData.paletteType, beadViewService.convert(currentData.data));
         $modalInstance.close();
       };
 

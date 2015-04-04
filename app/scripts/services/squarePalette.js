@@ -1,6 +1,6 @@
 angular.module('palette').service('squarePalette',
   function () {
-    this.sideLength = 14;
+    this.sideLength = 20;
     this.beadsLength = 20;
     this.margin = 2;
     this.thunmbnailBeadsLength = 5;

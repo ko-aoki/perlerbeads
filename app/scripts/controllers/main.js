@@ -7,23 +7,29 @@
  */
 angular.module('perlerbeadsApp')
   .controller('MainCtrl',
-  ['$scope', '$modal', '$window', 'beadDataService', 'beadViewService', 'squarePalette',
-    function ($scope, $modal, $window, beadDataService, beadViewService, squarePalette) {
+  ['$scope', '$modal', '$window', '$q', 'beadDataService', 'beadViewService', 'squarePalette',
+    function ($scope, $modal, $window, $q, beadDataService, beadViewService, squarePalette) {
 
       var savedRecs = beadDataService.load();
-      beadViewService.setPaletteType(squarePalette);
       if (savedRecs != null) {
         for (var i = 0; i < savedRecs.length; i++) {
+          beadViewService.setPaletteType(savedRecs[i].paletteType);
           savedRecs[i].data = beadViewService.convert(savedRecs[i].data, true, i);
         }
       }
       $scope.savedRecs = savedRecs;
 
       function displayCurrent(){
-        if (beadDataService.currentGet() == null) {
+        var currentData = beadDataService.currentGet();
+        if (currentData == null) {
+          $scope.paletteType = "SQUARE";
+          beadViewService.setPaletteType($scope.paletteType);
           $scope.beadsList = beadViewService.makePalette();
         } else {
-          $scope.beadsList = beadViewService.convert(beadDataService.currentGet());
+          $scope.name = currentData.name;
+          $scope.paletteType = currentData.paletteType;
+          beadViewService.setPaletteType($scope.paletteType);
+          $scope.beadsList = beadViewService.convert(currentData.data);
           $scope.colors = beadViewService.countColors($scope.beadsList);
         }
       };
@@ -41,7 +47,7 @@ angular.module('perlerbeadsApp')
         } else {
           bead.color = $scope.color;
         }
-        beadDataService.currentSave($scope.beadsList);
+        beadDataService.currentSave($scope.name, $scope.paletteType, $scope.beadsList);
         $scope.colors = beadViewService.countColors($scope.beadsList);
       };
 
@@ -67,6 +73,7 @@ angular.module('perlerbeadsApp')
       };
 
       $scope.save = function () {
+        var deferred = $q.defer();
         var modalInstance = $modal.open({
           size: 'sm',
           templateUrl: 'saveDialog.tmpl.html',
@@ -79,17 +86,38 @@ angular.module('perlerbeadsApp')
         });
 
         modalInstance.result.then(function (fileName) {
-          beadDataService.save(fileName, $scope.beadsList);
+          beadDataService.save(fileName, $scope.paletteType, $scope.beadsList);
+          deferred.resolve();
+        },function() {
+          deferred.resolve();
         });
+        return deferred.promise;
       };
 
       $scope.makeNewData = function () {
+        var promise;
         if ($window.confirm( 'いまのずあんをほぞんしますか？')) {
-          $scope.save();
+          promise = $scope.save();
         }
-        $scope.name = '';
-        $scope.beadsList = beadViewService.makePalette();
-        $scope.colors = beadViewService.countColors($scope.beadsList);
+
+        var makeNewDataFunc = function() {
+          var modalInstance = $modal.open({
+            size: 'sm',
+            templateUrl: 'newPaletteDialog.tmpl.html',
+            controller: 'NewPaletteDialogCtrl'
+          });
+
+          modalInstance.result.then(function (paletteType) {
+            $scope.name = '';
+            $scope.paletteType = paletteType;
+            $scope.beadsList = beadViewService.makePalette(paletteType);
+          });
+        };
+        if (promise !== undefined) {
+          promise.then(makeNewDataFunc);
+        } else {
+          makeNewDataFunc();
+        }
       };
 
     }]);
