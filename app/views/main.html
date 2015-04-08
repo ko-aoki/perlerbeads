@@ -2,7 +2,7 @@
   <accordion close-others="oneAtATime">
     <accordion-group heading="ほぞんしたビーズをみる" is-open="status.isFirstOpen"
                      is-disabled="status.isFirstDisabled">
-      <div class="col col-md-12" style="height:140px;">
+      <div class="col col-md-12" style="height:160px;">
         <div ng-include src="'./views/handleSavedRecDialog.html'"></div>
         <div ng-repeat="saveRec in savedRecs" ng-click="handleSavedRec(saveRec.name)"
              style="display: inline-block; width:140px;">
@@ -17,6 +17,10 @@
           </div>
         </div>
       </div>
+      <pagination boundary-links="true" total-items="page.totalItems" ng-model="page.currentPage"
+                  items-per-page="4" ng-change="pageChanged()"
+                  class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+      </pagination>
     </accordion-group>
   </accordion>
 </div>

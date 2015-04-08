@@ -13,7 +13,7 @@ angular.module('palette').service('squarePalette',
       if (isThumbnail) {
         beadsLength = this.thunmbnailBeadsLength;
         topOffset = this.thunmbnailTopOffset;
-        recordOffset = this.thunmbnailRecordOffset * idx;
+        recordOffset = this.thunmbnailRecordOffset * (idx % 4);
         margin = this.thunmbnailMargin;
       } else {
         beadsLength = this.beadsLength;

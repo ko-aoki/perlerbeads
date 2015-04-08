@@ -34,7 +34,7 @@ angular.module('palette').service('circlePalette',
       var beads = new Array(this.coordinates.length);
       if (isThumbnail) {
         topOffset = this.thunmbnailTopOffset;
-        recordOffset = this.thunmbnailRecordOffset * idx;
+        recordOffset = this.thunmbnailRecordOffset * (idx % 4);
         for (diameter = 0; diameter < this.thunmbnailCoordinates.length; diameter++) {
           beads[diameter] = new Array(this.thunmbnailCoordinates[diameter].length);
           for (circumference = 0; circumference < this.thunmbnailCoordinates[diameter].length; circumference++) {
