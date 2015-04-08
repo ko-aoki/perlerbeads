@@ -2,7 +2,7 @@
   <accordion close-others="oneAtATime">
     <accordion-group heading="ほぞんしたビーズをみる" is-open="status.isFirstOpen"
                      is-disabled="status.isFirstDisabled">
-      <div class="col col-md-12" style="height:120px;">
+      <div class="col col-md-12" style="height:140px;">
         <div ng-include src="'./views/handleSavedRecDialog.html'"></div>
         <div ng-repeat="saveRec in savedRecs" ng-click="handleSavedRec(saveRec.name)"
              style="display: inline-block; width:140px;">
@@ -45,8 +45,8 @@
 
   <div class="row">
     <div class="col col-md-6" ng-dblclick="open('sm')">
-      <div ng-repeat="beads in beadsList">
-        <div ng-repeat="bead in beads">
+      <div ng-repeat="beads in beadsList track by $index">
+        <div ng-repeat="bead in beads track by $index">
           <div class="circle {{bead.color}}" ng-click="changeColor(bead)"
                style="position: absolute; top:{{bead.top}}px; left:{{bead.left}}px;">
           </div>

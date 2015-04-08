@@ -7,8 +7,8 @@
  */
 angular.module('perlerbeadsApp')
   .controller('MainCtrl',
-  ['$scope', '$modal', '$window', '$q', 'beadDataService', 'beadViewService', 'squarePalette',
-    function ($scope, $modal, $window, $q, beadDataService, beadViewService, squarePalette) {
+  ['$scope', '$modal', '$window', '$q', 'beadDataService', 'beadViewService',
+    function ($scope, $modal, $window, $q, beadDataService, beadViewService) {
 
       var savedRecs = beadDataService.load();
       if (savedRecs != null) {
@@ -110,7 +110,8 @@ angular.module('perlerbeadsApp')
           modalInstance.result.then(function (paletteType) {
             $scope.name = '';
             $scope.paletteType = paletteType;
-            $scope.beadsList = beadViewService.makePalette(paletteType);
+            beadViewService.setPaletteType(paletteType);
+            $scope.beadsList = beadViewService.makePalette();
           });
         };
         if (promise !== undefined) {

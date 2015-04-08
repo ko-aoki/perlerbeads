@@ -28,10 +28,8 @@ angular.module('palette').service('squarePalette',
           beads[topIdx][leftIdx].top = topIdx * (beadsLength + margin) + topOffset;
           beads[topIdx][leftIdx].left = leftIdx * (beadsLength + margin) + recordOffset;
           beads[topIdx][leftIdx].color = 'deselect';
-          console.log("beads.length[" + topIdx +"]:" + beads[topIdx].length);
         }
       }
-console.log("beads.length:" + beads.length);
       return beads;
     };
 
