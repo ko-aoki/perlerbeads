@@ -22,15 +22,11 @@ angular.module('palette').service('circlePalette',
       [{ left:'51',top:'1'},	{ left:'59',top:'1'},	{ left:'66',top:'4'},	{ left:'72',top:'7'},	{ left:'78',top:'11'},	{ left:'83',top:'16'},	{ left:'88',top:'21'},	{ left:'91',top:'28'},	{ left:'94',top:'34'},	{ left:'95',top:'41'},	{ left:'95',top:'48'},	{ left:'94',top:'55'},	{ left:'92',top:'62'},	{ left:'90',top:'68'},	{ left:'86',top:'74'},	{ left:'82',top:'80'},	{ left:'77',top:'84'},	{ left:'72',top:'88'},	{ left:'66',top:'92'},	{ left:'59',top:'94'},	{ left:'53',top:'95'},	{ left:'46',top:'95'},	{ left:'39',top:'94'},	{ left:'31',top:'92'},	{ left:'25',top:'88'},	{ left:'19',top:'84'},	{ left:'14',top:'80'},	{ left:'9',top:'74'},	{ left:'6',top:'68'},	{ left:'3',top:'62'},	{ left:'1',top:'55'},	{ left:'0',top:'48'},	{ left:'1',top:'41'},	{ left:'3',top:'34'},	{ left:'5',top:'28'},	{ left:'8',top:'21'},	{ left:'13',top:'16'},	{ left:'18',top:'11'},	{ left:'24',top:'7'},	{ left:'30',top:'4'},	{ left:'38',top:'1'},	{ left:'44',top:'1'}]
     ];
 
-    this.circumferenceLength = 42;
-    this.diameterLength = 15;
-    this.beadsLength = 20;
-    this.thunmbnailBeadsLength = 4;
     this.thunmbnailTopOffset = 40;
     this.thunmbnailRecordOffset = 150;
 
     this.makePalette = function (isThumbnail, idx) {
-      var diameter, circumference, beadsLength, topOffset, recordOffset, margin;
+      var diameter, circumference, topOffset, recordOffset, margin;
       var beads = new Array(this.coordinates.length);
       if (isThumbnail) {
         topOffset = this.thunmbnailTopOffset;

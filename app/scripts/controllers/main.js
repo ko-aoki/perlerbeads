@@ -17,17 +17,18 @@ angular.module('perlerbeadsApp')
           savedRecs[i].data = beadViewService.convert(savedRecs[i].data, true, i);
         }
       }
-      $scope.page = {
-        itemSize: 4,
-        totalItems: savedRecs.length,
-        currentPage: 1
-      };
-      $scope.savedRecs = savedRecs.slice(0, $scope.page.itemSize);
-      $scope.pageChanged = function() {
-        $scope.savedRecs = savedRecs.slice(($scope.page.currentPage - 1) * $scope.page.itemSize,
+      if (savedRecs !== null) {
+        $scope.page = {
+          itemSize: 4,
+          totalItems: savedRecs.length,
+          currentPage: 1
+        };
+        $scope.savedRecs = savedRecs.slice(0, $scope.page.itemSize);
+        $scope.pageChanged = function() {
+          $scope.savedRecs = savedRecs.slice(($scope.page.currentPage - 1) * $scope.page.itemSize,
             $scope.page.currentPage * $scope.page.itemSize);
-      };
-
+        };
+      }
       function displayCurrent(){
         var currentData = beadDataService.currentGet();
         if (currentData == null) {
