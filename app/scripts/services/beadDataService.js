@@ -80,10 +80,10 @@ angular.module('perlerbeadsApp').service('beadDataService', ['$resource', '$wind
             return {};
         };
 
-        this.removePosition = function (currentData, palette) {
+        this.removePosition = function (currentData) {
             var data = angular.copy(currentData);
-            for (var topIdx = 0; topIdx < palette.sideLength; topIdx++) {
-                for (var leftIdx = 0; leftIdx < palette.sideLength; leftIdx++) {
+            for (var topIdx = 0; topIdx < data.length; topIdx++) {
+                for (var leftIdx = 0; leftIdx < data[topIdx].length; leftIdx++) {
                     delete data[topIdx][leftIdx].top;
                     delete data[topIdx][leftIdx].left;
                 }

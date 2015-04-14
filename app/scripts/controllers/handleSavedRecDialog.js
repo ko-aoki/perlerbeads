@@ -5,8 +5,7 @@ angular.module('perlerbeadsApp')
       $scope.name = name;
       $scope.edit = function () {
         currentData = beadDataService.getDataByName(name);
-        beadViewService.setPaletteType(currentData.paletteType);
-        beadDataService.currentSave(name, currentData.paletteType, beadViewService.convert(currentData.data));
+        beadDataService.currentSave(name, currentData.paletteType, beadViewService.convert(currentData.paletteType, currentData.data));
         $modalInstance.close();
       };
 

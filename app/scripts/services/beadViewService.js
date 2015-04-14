@@ -4,12 +4,12 @@ angular.module('perlerbeadsApp').service('beadViewService',['beadService',
       this.palette = beadService.getPalette(paletteType);
     };
 
-    this.makePalette = function () {
-      return this.palette.makePalette();
+    this.makePalette = function (paletteType) {
+      return beadService.getPalette(paletteType).makePalette();
     };
 
-    this.convert = function (data, isThumbnail, idx) {
-      return this.palette.convert(data, isThumbnail, idx);
+    this.convert = function (paletteType, data, isThumbnail, idx) {
+      return beadService.getPalette(paletteType).convert(data, isThumbnail, idx);
     };
 
     this.countColors = function(beadsList) {
@@ -22,9 +22,9 @@ angular.module('perlerbeadsApp').service('beadViewService',['beadService',
             continue;
           }
           if (colors[color] == null) {
-            colors[color] = 1;
+            colors[color] = {cnt:1, colorName: beadService.getColorName(color)};
           } else {
-            colors[color]++;
+            colors[color].cnt++;
           }
         }
       }

@@ -7,39 +7,46 @@
  */
 angular.module('perlerbeadsApp')
   .controller('MainCtrl',
-  ['$scope', '$modal', '$window', '$q', 'beadDataService', 'beadViewService',
-    function ($scope, $modal, $window, $q, beadDataService, beadViewService) {
+  ['$scope', '$modal', '$window', '$q', 'beadService', 'beadDataService', 'beadViewService',
+    function ($scope, $modal, $window, $q, beadService, beadDataService, beadViewService) {
 
-      var savedRecs = beadDataService.load();
-      if (savedRecs != null) {
-        for (var i = 0; i < savedRecs.length; i++) {
-          beadViewService.setPaletteType(savedRecs[i].paletteType);
-          savedRecs[i].data = beadViewService.convert(savedRecs[i].data, true, i);
+      var savedRecs;
+      function load() {
+        savedRecs = beadDataService.load();
+        if (savedRecs !== null) {
+          for (var i = 0; i < savedRecs.length; i++) {
+            savedRecs[i].data = beadViewService.convert(savedRecs[i].paletteType, savedRecs[i].data, true, i);
+          }
+        }
+        if (savedRecs !== null) {
+          $scope.page = {
+            itemSize: 4,
+            totalItems: savedRecs.length,
+            currentPage: 1
+          };
+          $scope.savedRecs = savedRecs.slice(0, $scope.page.itemSize);
         }
       }
-      if (savedRecs !== null) {
-        $scope.page = {
-          itemSize: 4,
-          totalItems: savedRecs.length,
-          currentPage: 1
-        };
-        $scope.savedRecs = savedRecs.slice(0, $scope.page.itemSize);
-        $scope.pageChanged = function() {
-          $scope.savedRecs = savedRecs.slice(($scope.page.currentPage - 1) * $scope.page.itemSize,
-            $scope.page.currentPage * $scope.page.itemSize);
-        };
-      }
+      load();
+
+      $scope.pageChanged = function () {
+        if (savedRecs === null) {
+          return;
+        }
+
+        $scope.savedRecs = savedRecs.slice(($scope.page.currentPage - 1) * $scope.page.itemSize,
+          $scope.page.currentPage * $scope.page.itemSize);
+      };
+
       function displayCurrent(){
         var currentData = beadDataService.currentGet();
         if (currentData == null) {
           $scope.paletteType = "SQUARE";
-          beadViewService.setPaletteType($scope.paletteType);
-          $scope.beadsList = beadViewService.makePalette();
+          $scope.beadsList = beadViewService.makePalette("SQUARE");
         } else {
           $scope.name = currentData.name;
+          $scope.beadsList = beadViewService.convert(currentData.paletteType, currentData.data);
           $scope.paletteType = currentData.paletteType;
-          beadViewService.setPaletteType($scope.paletteType);
-          $scope.beadsList = beadViewService.convert(currentData.data);
           $scope.colors = beadViewService.countColors($scope.beadsList);
         }
       };
@@ -49,6 +56,7 @@ angular.module('perlerbeadsApp')
 
       $scope.select = function(color) {
         $scope.color = color;
+        $scope.colorName = beadService.getColorName(color);
       };
 
       $scope.changeColor = function (bead) {
@@ -78,6 +86,7 @@ angular.module('perlerbeadsApp')
 
         modalInstance.result.then(function (){
           $scope.name = name;
+          load();
           displayCurrent();
         });
       };
@@ -97,6 +106,8 @@ angular.module('perlerbeadsApp')
 
         modalInstance.result.then(function (fileName) {
           beadDataService.save(fileName, $scope.paletteType, $scope.beadsList);
+          load();
+          $scope.name = fileName;
           deferred.resolve();
         },function() {
           deferred.resolve();
@@ -120,8 +131,7 @@ angular.module('perlerbeadsApp')
           modalInstance.result.then(function (paletteType) {
             $scope.name = '';
             $scope.paletteType = paletteType;
-            beadViewService.setPaletteType(paletteType);
-            $scope.beadsList = beadViewService.makePalette();
+            $scope.beadsList = beadViewService.makePalette(paletteType);
             $scope.colors = beadViewService.countColors($scope.beadsList);
           });
         };
