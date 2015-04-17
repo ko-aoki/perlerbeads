@@ -25,12 +25,12 @@ angular.module('palette').service('circlePalette',
     this.thunmbnailTopOffset = 40;
     this.thunmbnailRecordOffset = 150;
 
-    this.makePalette = function (isThumbnail, idx) {
+    this.makePalette = function (isThumbnail, idx, itemSize) {
       var diameter, circumference, topOffset, recordOffset, margin;
       var beads = new Array(this.coordinates.length);
       if (isThumbnail) {
         topOffset = this.thunmbnailTopOffset;
-        recordOffset = this.thunmbnailRecordOffset * (idx % 4);
+        recordOffset = this.thunmbnailRecordOffset * (idx % itemSize);
         for (diameter = 0; diameter < this.thunmbnailCoordinates.length; diameter++) {
           beads[diameter] = new Array(this.thunmbnailCoordinates[diameter].length);
           for (circumference = 0; circumference < this.thunmbnailCoordinates[diameter].length; circumference++) {
@@ -54,15 +54,15 @@ angular.module('palette').service('circlePalette',
       return beads;
     };
 
-    this.makeThumbnailPalette = function (idx) {
-      return this.makePalette(true, idx);
+    this.makeThumbnailPalette = function (idx, itemSize) {
+      return this.makePalette(true, idx, itemSize);
     };
 
-    this.convert = function(data, isThumbnail, idx) {
+    this.convert = function(data, isThumbnail, idx, itemSize) {
       var diameter , circumference;
       var convData = [];
       if (isThumbnail) {
-        convData = this.makeThumbnailPalette(idx);
+        convData = this.makeThumbnailPalette(idx, itemSize);
       } else {
         convData = this.makePalette();
       }

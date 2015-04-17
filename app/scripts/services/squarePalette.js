@@ -7,13 +7,13 @@ angular.module('palette').service('squarePalette',
     this.thunmbnailTopOffset = 40;
     this.thunmbnailRecordOffset = 150;
     this.thunmbnailMargin = 0;
-    this.makePalette = function (isThumbnail, idx) {
+    this.makePalette = function (isThumbnail, idx, itemSize) {
       var topIdx, leftIdx, beadsLength, topOffset, recordOffset, margin;
       var beads = new Array(this.sideLength);
       if (isThumbnail) {
         beadsLength = this.thunmbnailBeadsLength;
         topOffset = this.thunmbnailTopOffset;
-        recordOffset = this.thunmbnailRecordOffset * (idx % 4);
+        recordOffset = this.thunmbnailRecordOffset * (idx % itemSize);
         margin = this.thunmbnailMargin;
       } else {
         beadsLength = this.beadsLength;
@@ -33,15 +33,15 @@ angular.module('palette').service('squarePalette',
       return beads;
     };
 
-    this.makeThumbnailPalette = function (idx) {
-      return this.makePalette(true, idx);
+    this.makeThumbnailPalette = function (idx, itemSize) {
+      return this.makePalette(true, idx, itemSize);
     };
 
-    this.convert = function(data, isThumbnail, idx) {
+    this.convert = function(data, isThumbnail, idx, itemSize) {
       var topIdx , leftIdx;
       var convData = [];
       if (isThumbnail) {
-        convData = this.makeThumbnailPalette(idx);
+        convData = this.makeThumbnailPalette(idx, itemSize);
       } else {
         convData = this.makePalette();
       }

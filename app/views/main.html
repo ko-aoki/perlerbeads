@@ -1,13 +1,20 @@
+<div class="row col col-md-12 alert alert-warning">
+  <ul>
+    <li>図案を印刷するときはハードコピーしてください。</li>
+    <li>IEでは動作しません。。</li>
+  </ul>
+</div>
+
 <div class="row col col-md-12">
   <accordion close-others="oneAtATime" style="background-color: #d9edf7;">
     <accordion-group heading="ほぞんしたずあんをみる" is-open="status.isFirstOpen"
                      is-disabled="status.isFirstDisabled">
-      <div class="col col-md-12" style="height:160px;">
+      <p>タイトルをクリックでへんしゅうできます。</p>
+      <div id="saveDiv" class="col col-md-12" style="height:160px;">
         <div ng-include src="'./views/handleSavedRecDialog.html'"></div>
         <div ng-repeat="saveRec in savedRecs" ng-click="handleSavedRec(saveRec.name)"
-             style="display: inline-block; width:140px;">
-          <label style="position: absolute; left:{{$index * 150}}px;">{{saveRec.name}}</label>
-
+             style="display: inline-block; width:150px;">
+          <div style="position: absolute; top: 0px; left:{{$index * 150}}px; width: 130px;">{{saveRec.name}}</div>
           <div ng-repeat="savedBeads in saveRec.data">
             <div ng-repeat="savedBead in savedBeads">
               <div class="s_circle s_{{savedBead.color}}"
@@ -18,12 +25,13 @@
         </div>
       </div>
       <pagination boundary-links="true" total-items="page.totalItems" ng-model="page.currentPage"
-                  items-per-page="4" ng-change="pageChanged()"
+                  items-per-page="page.itemSize" ng-change="pageChanged()"
                   class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
       </pagination>
     </accordion-group>
   </accordion>
 </div>
+
 <div class="row col col-md-12">
   <div class="panel panel-info">
     <div class="panel panel-heading">
@@ -61,47 +69,49 @@
 
   <br/>
 
-  <div class="row">
-    <div class="col col-md-6" ng-dblclick="open('sm')">
-      <div ng-repeat="beads in beadsList track by $index">
-        <div ng-repeat="bead in beads track by $index">
-          <div class="circle {{bead.color}}" ng-click="changeColor(bead)"
-               style="position: absolute; top:{{bead.top}}px; left:{{bead.left}}px;">
-          </div>
+  <div class="row col col-md-12" ng-dblclick="open('sm')">
+    <div ng-repeat="beads in beadsList track by $index">
+      <div ng-repeat="bead in beads track by $index">
+        <div class="circle {{bead.color}}" ng-click="changeColor(bead)"
+             style="position: absolute; top:{{bead.top}}px; left:{{bead.left}}px;">
         </div>
-        <div ng-include src="'./views/contextMenu.html'"></div>
       </div>
-    </div>
-    <div class="col col-md-6" style="left: 130px;">
-      <h4>{{name}}</h4>
-      <br/>
-      <!--
-            <input type="button" class="btn btn-primary" value="いろをかえる" ng-click="open('sm')"/>
-            <br/>
-            <br/>
-      -->
-      <input type="button" class="btn btn-info" value="ほぞんする" ng-click="save()"/>
-      <input type="button" class="btn btn-info" value="あたらしくつくる" ng-click="makeNewData()"/>
-      <br/>
-      <br/>
-
-      <label>ビーズのかず</label>
-      <ul>
-        <div ng-repeat="(key, value)  in colors">
-          <li>
-            <div class="circle {{key}}" style="display: inline-block">
-            </div>
-            <div style="display: inline-block">
-              {{value.colorName}}
-            </div>
-            <div style="display: inline-block">{{value.cnt}}</div>
-          </li>
-        </div>
-      </ul>
-      <div ng-include src="'./views/saveDialog.html'"></div>
-      <div ng-include src="'./views/newPaletteDialog.html'"></div>
+      <div ng-include src="'./views/contextMenu.html'"></div>
     </div>
   </div>
+
+  <br/>
+
+  <div class="row col col-md-12" style="top: 420px">
+    <h4>{{name}}</h4>
+    <br/>
+    <!--
+          <input type="button" class="btn btn-primary" value="いろをかえる" ng-click="open('sm')"/>
+          <br/>
+          <br/>
+    -->
+    <input type="button" class="btn btn-info" value="ほぞんする" ng-click="save()"/>
+    <input type="button" class="btn btn-info" value="あたらしくつくる" ng-click="makeNewData()"/>
+    <br/>
+    <br/>
+
+    <label>ビーズのかず</label>
+    <ul>
+      <div ng-repeat="(key, value)  in colors">
+        <li>
+          <div class="circle {{key}}" style="display: inline-block">
+          </div>
+          <div style="display: inline-block">
+            {{value.colorName}}
+          </div>
+          <div style="display: inline-block">{{value.cnt}}</div>
+        </li>
+      </div>
+    </ul>
+    <div ng-include src="'./views/saveDialog.html'"></div>
+    <div ng-include src="'./views/newPaletteDialog.html'"></div>
+  </div>
+
 </div>
 </div>
 
